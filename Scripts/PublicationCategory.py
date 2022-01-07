@@ -1,0 +1,1 @@
+# Script para poder cadastrar todas as categorias de publicação de forma dinamica
