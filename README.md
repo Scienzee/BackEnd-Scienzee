@@ -39,7 +39,7 @@
 - [ ] PDF para impressão de edital
 
 
-<h3 id="Tecnologias">Tecnologias</h3>
+<h3 id="Tecnologias"> :computer: Tecnologias</h3>
 <p>As seguintes ferramentas foram usadas na construção do projeto:</p>
 
 [<img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white" />](https://www.djangoproject.com/)
@@ -52,7 +52,7 @@
 <!-- [<img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />](https://pt-br.reactjs.org/) -->
 
 
-<h1 id="Rodando">Rodando o projeto</h1>
+<h3 id="Rodando"> :rocket: Rodando o projeto</h3>
 <h4>Clonando o projeto</h4>
 <p>Dentro do diretório onde o projeto ficará armazenado, abra o terminal.</p>
 
@@ -83,7 +83,7 @@ python manage.py runserver
 
 <h3 id="autores">Autor(es)</h3>
 
-<b>Camila Adriana Gomes de Jesus</b>
+<b> :woman: Camila Adriana Gomes de Jesus</b>
 
 [![Twitter Badge](https://img.shields.io/badge/-@camilaA58109563-1ca0f1?style=flat-square&labelColor=1ca0f1&logo=twitter&logoColor=white&link=https://twitter.com/Camila)](https://twitter.com/CamilaA58109563?s=09) [![Linkedin Badge](https://img.shields.io/badge/-Camila-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/Camila/)](https://www.linkedin.com/in/camila-adriana-gomes-de-jesus-04767b1ba/) 
 
