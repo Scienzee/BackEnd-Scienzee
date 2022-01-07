@@ -6,3 +6,4 @@ from Administration.Views import Notice
 from Administration.Views import Articles
 
 
+# teste
