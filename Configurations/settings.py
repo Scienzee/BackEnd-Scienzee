@@ -50,7 +50,7 @@ MIDDLEWARE += [
 # Configurações de CORS do sistema
 CORS_ORIGIN_ALLOW_ALL = False # Não permite acessso de todos os domínios
 CORS_ORIGIN_WHITELIST = (
-    'http://lochhost:3000', # Quem pode acessar seus domínios
+    'http://localhost:3000', # Quem pode acessar seus domínios
 )
 
 
