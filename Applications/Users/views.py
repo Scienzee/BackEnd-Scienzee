@@ -5,5 +5,3 @@ from Administration.Views import News
 from Administration.Views import Notice
 from Administration.Views import Articles
 
-
-# teste
