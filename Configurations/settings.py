@@ -47,6 +47,17 @@ MIDDLEWARE += [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
+# Configurando configurações de usuários 
+
+# Declarando qual é o novo padrão de User
+AUTH_USER_MODEL = "Users.User" 
+
+# Redirecionando para a pagina inicial depois de logar
+# LOGIN_REDIRECT_URL = 'ViewIndex' 
+
+# Definindo a view padrão do Django de login
+# LOGIN_URL = 'ViewLogin' 
+
 # Configurações de CORS do sistema
 CORS_ORIGIN_ALLOW_ALL = False # Não permite acessso de todos os domínios
 CORS_ORIGIN_WHITELIST = (

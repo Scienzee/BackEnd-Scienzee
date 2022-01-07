@@ -13,27 +13,27 @@ ACADEMIC_DEGREE = [
     ("ESC", "Ensino superior completo"),
 ]
 
-class UsuarioManager(BaseUserManager):
+class UserManager(BaseUserManager):
     def create_user(self,email,password=None):
-        usuario = self.model(email = email)
-        usuario.is_active = True
-        usuario.is_staff = False
-        usuario.is_superuser = False
+        user = self.model(email = email)
+        user.is_active = True
+        user.is_staff = False
+        user.is_superuser = False
 
         if password:
-            usuario.set_password(password)        
-        usuario.save()
+            user.set_password(password)        
+        user.save()
         
         return usuario
     
     def create_superuser(self,email,password):
-        usuario = self.create_user(email = email, password = password)
-        usuario.is_active = True
-        usuario.is_staff = True
-        usuario.is_superuser = True
-        usuario.set_password(password)
-        usuario.save()
-        return usuario
+        user = self.create_user(email = email, password = password)
+        user.is_active = True
+        user.is_staff = True
+        user.is_superuser = True
+        user.set_password(password)
+        user.save()
+        return user
 
 class State(models.Model):
     descreption = models.CharField("Descreption of the state", max_length=100)
@@ -113,7 +113,7 @@ class User(AbstractBaseUser,PermissionsMixin):
     is_superuser = models.BooleanField(verbose_name= "User is superuser",default=False)
 
     USERNAME_FIELD = "email"
-    objects = UsuarioManager()
+    objects = UserManager()
 
     class Meta:
         verbose_name = "User"
@@ -127,16 +127,3 @@ class User(AbstractBaseUser,PermissionsMixin):
     # def get_full_name(self): 
     #     return str(self.nome + ' ' + self.sobrenome)
 
-# class FavoritosUsuarios(models.Model):
-#     usuario = models.ForeignKey("Usuario", on_delete=CASCADE, related_name="FavoritosdoUsuario")
-#     publicacao = models.ForeignKey("Publicacoes.Publicacao", on_delete=CASCADE, related_name="PublicacoesFavoritas")
-#     dataFavoritad = models.DateTimeField("Data da favoritação", auto_now_add=True)
-
-#     class Meta:
-#         verbose_name = "Favoritos Usuarios"
-#         verbose_name_plural="Favoritos Usuarios"
-#         ordering = ['usuario']
-#         app_label = 'Usuarios'
-        
-#     def __str__(self):
-#         return str(self.usuario)
