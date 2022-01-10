@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import( BaseUserManager, AbstractBaseUser, PermissionsMixin)
 from django.db.models.deletion import CASCADE, SET_NULL
-from django.db.models.base import Models
 from django.utils.encoding import force_str
 
 ACADEMIC_DEGREE = [
@@ -109,8 +108,9 @@ class User(AbstractBaseUser,PermissionsMixin):
     name = models.CharField("Name", max_length = 194, null=True, blank=True)
     birthDate = models.DateField("Birth Date",auto_now=False, auto_now_add=False, null=True, blank=True)
     email = models.EmailField("E-mail",max_length=194, unique=True)
-    AcademicDegree = models.CharField("Academic Degree", max_length=30, choices=ESCOLARIDADE, null=True, blank=True)
-    areaPreference = models.ManyToManyField(AreaAtuacao)
+    AcademicDegree = models.CharField("Academic Degree", max_length=30, choices=ACADEMIC_DEGREE, null=True, blank=True)
+    area = models.ManyToManyField(Area)    
+    areaPreference = models.ManyToManyField(PreferenceArea)
     country =  models.ForeignKey(Country, related_name="ContryOfTheUser", on_delete=models.CASCADE)
     state = models.ForeignKey(State,on_delete=CASCADE, null=True, blank=True, related_name="StateOfTheUser")
     city = models.ForeignKey(City, on_delete=models.CASCADE, related_name="CityOfTheUser", null=True, blank=True)
