@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import( BaseUserManager, AbstractBaseUser, PermissionsMixin)
 from django.db.models.deletion import CASCADE, SET_NULL
-from smart_selects.db_fields import ChainedForeignKey
-
+from django.db.models.base import Models
+from django.utils.encoding import force_str
 
 ACADEMIC_DEGREE = [
     ("EFI", "Ensino fundamental incompleto"),
@@ -35,7 +35,23 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
+
+class Country(models.Model):
+    descreption = models.CharField("Descreption of the state", max_length=100)
+    initials = models.CharField("Initials of the state ", max_length=100)
+    creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
+    
+    class Meta:
+        verbose_name = "State"
+        verbose_name_plural="States"
+        ordering = ['descreption']
+        app_label = 'Users'
+
+    def __str__(self):
+        return self.descreption
+
 class State(models.Model):
+    country = models.ForeignKey(Country, related_name="CountryOfTheState", on_delete=models.CASCADE)
     descreption = models.CharField("Descreption of the state", max_length=100)
     initials = models.CharField("Initials of the state ", max_length=100)
     creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
@@ -51,7 +67,7 @@ class State(models.Model):
 
 class City(models.Model):
     descreption = models.CharField("Descreption of the City", max_length=100)
-    estado = models.ForeignKey(State, related_name="StateOfCity" max_length=100, on_delete=CASCADE)
+    state = models.ForeignKey(State, related_name="StateOfCity", max_length=100, on_delete=CASCADE)
     creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
 
     class Meta:
@@ -80,7 +96,7 @@ class PreferenceArea(models.Model):
     creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
 
     class Meta:
-        verbose_name = "Area Of the Prefence"
+        verbose_name = "Area Of the Prefence"        
         verbose_name_plural="Area Of the Prefences"
         ordering = ['name']
         app_label = 'Users'
@@ -95,14 +111,9 @@ class User(AbstractBaseUser,PermissionsMixin):
     email = models.EmailField("E-mail",max_length=194, unique=True)
     AcademicDegree = models.CharField("Academic Degree", max_length=30, choices=ESCOLARIDADE, null=True, blank=True)
     areaPreference = models.ManyToManyField(AreaAtuacao)
-    state = models.ForeignKey("State",on_delete=CASCADE ,null=True, blank=True)
-    city = ChainedForeignKey(City, 
-        chained_field="state", 
-        chained_model_field="state"
-        show_all=False,
-        auto_choose=True,
-        sort=True        
-    )
+    country =  models.ForeignKey(Country, related_name="ContryOfTheUser", on_delete=models.CASCADE)
+    state = models.ForeignKey(State,on_delete=CASCADE, null=True, blank=True, related_name="StateOfTheUser")
+    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name="CityOfTheUser", null=True, blank=True)
     profilePicture = models.ImageField("Profile Picture",  null=True, blank=True, upload_to="ProfilePicture/%y/%m/%d")
     coverPhoto = models.ImageField("Cover Photo",  null=True, blank=True, upload_to="CoverPhoto/%y/%m/%d")
     descreption = models.TextField("Descreption", null=True, blank=True)
