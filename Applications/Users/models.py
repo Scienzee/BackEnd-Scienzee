@@ -3,14 +3,6 @@ from django.contrib.auth.models import( BaseUserManager, AbstractBaseUser, Permi
 from django.db.models.deletion import CASCADE, SET_NULL
 from django.utils.encoding import force_str
 
-ACADEMIC_DEGREE = [
-    ("EFI", "Ensino fundamental incompleto"),
-    ("EFC", "Ensino fundamental completo"),
-    ("EMI", "Ensino médio incompleto"),
-    ("EMC", "Ensino médio completo"),
-    ("ESI", "Ensino superior incompleto"),
-    ("ESC", "Ensino superior completo"),
-]
 
 class UserManager(BaseUserManager):
     def create_user(self,email,password=None):
@@ -105,6 +97,16 @@ class PreferenceArea(models.Model):
 
 
 class User(AbstractBaseUser,PermissionsMixin):
+
+    ACADEMIC_DEGREE = [
+        ("EFI", "Ensino fundamental incompleto"),
+        ("EFC", "Ensino fundamental completo"),
+        ("EMI", "Ensino médio incompleto"),
+        ("EMC", "Ensino médio completo"),
+        ("ESI", "Ensino superior incompleto"),
+        ("ESC", "Ensino superior completo"),
+    ]
+
     name = models.CharField("Name", max_length = 194, null=True, blank=True)
     birthDate = models.DateField("Birth Date",auto_now=False, auto_now_add=False, null=True, blank=True)
     email = models.EmailField("E-mail",max_length=194, unique=True)
