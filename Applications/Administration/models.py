@@ -40,6 +40,7 @@ class Notice(models.Model):
     typeOfNotice = models.CharField('Type of the notice', max_length=2, choices=TYPE_NOTICE, blank=True, null=True)
     area = models.ManyToManyField(Area)    
     subArea = models.ManyToManyField(AreaOfThePrerence)
+    publicationBy = models.ForeignKey
 
 
 
