@@ -29,9 +29,18 @@ INSTALLED_APPS += [
     'corsheaders',
     'rest_framework.authtoken',
     'rest_auth',
+    'django.contrib.sites', 
+    'allauth', 
+    'allauth.account', 
+    'rest_auth.registration', 
+    'allauth.socialaccount', 
+    'allauth.socialaccount.providers.facebook', 
+    'allauth.socialaccount.providers.google', 
     'Users',
     'Administration',
 ]
+
+SITE_ID = 1
 
 # MIDDLEWARE interno do Django
 MIDDLEWARE = [
