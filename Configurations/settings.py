@@ -27,6 +27,8 @@ INSTALLED_APPS = [
 INSTALLED_APPS += [
     'rest_framework',
     'corsheaders',
+    'rest_framework.authtoken',
+    'rest_auth',
     'Users',
     'Administration',
 ]
@@ -59,7 +61,7 @@ AUTH_USER_MODEL = "Users.User"
 # LOGIN_URL = 'ViewLogin' 
 
 # Configurações de CORS do sistema
-CORS_ORIGIN_ALLOW_ALL = False # Não permite acessso de todos os domínios
+CORS_ORIGIN_ALLOW_ALL = True # Permite acessso de todos os domínios
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000', # Quem pode acessar seus domínios
 )
