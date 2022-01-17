@@ -119,6 +119,7 @@ class User(AbstractBaseUser,PermissionsMixin):
     profilePicture = models.ImageField("Profile Picture",  null=True, blank=True, upload_to="ProfilePicture/%y/%m/%d")
     coverPhoto = models.ImageField("Cover Photo",  null=True, blank=True, upload_to="CoverPhoto/%y/%m/%d")
     descreption = models.TextField("Descreption", null=True, blank=True)
+    idGroup = models.IntegerField(verbose_name = 'Id do grupo', default = 2)
     creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
     deactivationTime = models.DateTimeField("Deactivation Time", blank=True, null=True)
     is_active = models.BooleanField(verbose_name="User is active ",default=True)
