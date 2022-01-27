@@ -9,4 +9,5 @@ urlpatterns = [
     # Incluindo rotas de outras urls
     path('', include('Users.urls')),
     path('Administration', include('Administration.urls')),    
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]

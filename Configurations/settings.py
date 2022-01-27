@@ -38,7 +38,13 @@ INSTALLED_APPS += [
     'allauth.socialaccount.providers.google', 
     'Users',
     'Administration',
+    'Relations',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
+
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 SITE_ID = 1
 

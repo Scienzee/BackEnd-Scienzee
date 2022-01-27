@@ -1,5 +1,6 @@
 from django.db import models
-from Users.models import User, State, Country, Area, PreferenceArea, City
+from ckeditor_uploader.fields import RichTextUploadingField
+from Users.models import User, State, Country, Area, SubArea, City
 
 class TypesPublication(models.Model):
 
@@ -45,13 +46,13 @@ class Notice(models.Model):
     startOfRegistration = models.DateTimeField("start registration", auto_now_add=False)
     endOfRegistration = models.DateTimeField("End of Registration", auto_now_add=False)
     publicationPhoto = models.ImageField("Publication Photo", upload_to="PublicationPhoto/")
-    # contentente = RichTextUploadingField("Informações sobre o Edital")
+    content = RichTextUploadingField("Informações sobre o Edital")
     country = models.ManyToManyField(Country)
     states = models.ManyToManyField(State)
     city = models.ManyToManyField(City)
     typeOfNotice = models.CharField('Type of the notice', max_length=2, choices=TYPE_NOTICE, blank=True, null=True)
     area = models.ManyToManyField(Area)    
-    subArea = models.ManyToManyField(PreferenceArea)
+    subArea = models.ManyToManyField(SubArea)
     publicationBy = models.ForeignKey("Users.User", on_delete=models.CASCADE, related_name="NoticeBy")
     creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
     editedBy = models.ForeignKey("Users.User", on_delete=models.CASCADE, related_name="NoticeEditedBy")
@@ -62,17 +63,20 @@ class Notice(models.Model):
 
     class Meta:
         verbose_name: "Notice"
-        verbose_name_plural =  "Notices"
+        verbose_name_plural = "Notices"
         ordering =  ["title"]
         app_label =  "Administration"
 
     def __str__(self):
         return str(self.title)
+    
+    def get_absolute_url(self):
+        return reverse('article_detail', kwargs={'slug': self.slug})
 
-# class DenounceNotice(models.Model):
-
-
-
+    def save(self, *args, **kwargs): # new
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
 
 class Publication(models.Model):
 
@@ -86,9 +90,9 @@ class Publication(models.Model):
     descreption = models.CharField("Descreption of the", max_length=250)
     publicationPhoto = models.ImageField("Publication Photo", upload_to="PublicationPhoto/")
     typeOfPublication = models.ForeignKey(TypesPublication, on_delete=models.CASCADE, related_name="TypeOfPublication")
-    # contentente = RichTextUploadingField("Informações sobre o Edital")
+    contentent = RichTextUploadingField("Informações sobre o Edital")
     area = models.ManyToManyField(Area)    
-    subArea = models.ManyToManyField(PreferenceArea)
+    subArea = models.ManyToManyField(SubArea)
     publicationBy = models.ForeignKey("Users.User", on_delete=models.CASCADE, related_name="PublicationBy")
     creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
     editedBy = models.ForeignKey("Users.User", on_delete=models.CASCADE, related_name="EditedBy")
@@ -109,42 +113,34 @@ class Publication(models.Model):
     def __str__(self):
         return str(self.title)
 
-class LikePublication(models.Model):
-    publication = models.ForeignKey(Publication, on_delete=models.CASCADE, related_name="LikePublication")
+    def get_absolute_url(self):
+        return reverse('article_detail', kwargs={'slug': self.slug})
+
+    def save(self, *args, **kwargs): # new
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
+
+class Denounce(models.Model):
+
+    """
+        Categorias de denúncia da publicação. Exemplo, abuso, falta de respeito
+    """
+
+    name = models.CharField("Publication type name", max_length=20)
+    descreption = models.TextField("Descreption of the types")
     creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
-
-    class Meta:
-        verbose_name = "Like Publication"
-        verbose_name_plural = "Like Publications"
-        ordering = ['publication']
-
-    def __str__(self):
-        return str(self.title)
-
-class DeslikePublication(models.Model):
-    publication = models.ForeignKey(Publication, on_delete=models.CASCADE, related_name="DeslikePublication")
-    creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
-
-    class Meta:
-        verbose_name = "Deslike Publication"
-        verbose_name_plural = "Deslike Publications"
-        ordering = ['publication']
-
-    def __str__(self):
-        return str(self.title)
-
-class DenouncePublication(models.Model):
-    publication = models.ForeignKey(Publication, on_delete=models.CASCADE, related_name="DenouncePublication")
-    creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
-    # falta acrescentar a justificativa
     
     class Meta:
-        verbose_name = "Denoouce Publication"
-        verbose_name_plural = "Denounce Publications"
-        ordering = ['publication']
+        verbose_name: "Denounce"
+        verbose_name_plural =  "Denounces"
+        ordering =  ["name"]
+        app_label =  "Administration"
 
     def __str__(self):
-        return str(self.title)
+        return str(self.name)
+
+
 
 
 

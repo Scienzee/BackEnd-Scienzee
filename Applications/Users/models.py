@@ -26,8 +26,32 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
+class Continent(models.Model):
+    
+    """
+        Continent existentes na atualidade, para facilitar na hora da busca pelo país
+    """
+
+    name = models.CharField("Name of the Continent", max_length=50)
+    creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Continent"
+        verbose_name_plural="Continent"
+        ordering = ['name']
+        app_label = 'Users'
+
+    def __str__(self):
+        return self.descreption
 
 class Country(models.Model):
+    
+    """
+        Países existentes na atualidade. Entretanto no Front-End deverá ser mostrado somente os países de acordo com 
+        o continente selecionado
+    """
+
+    continent = models.ForeignKey(Continent, on_delete=models.CASCADE, related_name="ContintOfTheCountry")
     descreption = models.CharField("Descreption of the state", max_length=100)
     initials = models.CharField("Initials of the state ", max_length=100)
     creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
@@ -42,6 +66,12 @@ class Country(models.Model):
         return self.descreption
 
 class State(models.Model):
+
+    """
+        Estados existentes na atualidade. Entretanto no Front-End deverá ser mostrado somente os estados de acordo com 
+        o país selecionado
+    """
+
     country = models.ForeignKey(Country, related_name="CountryOfTheState", on_delete=models.CASCADE)
     descreption = models.CharField("Descreption of the state", max_length=100)
     initials = models.CharField("Initials of the state ", max_length=100)
@@ -57,6 +87,12 @@ class State(models.Model):
         return self.descreption
 
 class City(models.Model):
+
+    """
+        Cidades existentes na atualidade. Entretanto no Front-End deverá ser mostrado somente as cidades de acordo com 
+        o estado selecionado
+    """
+
     descreption = models.CharField("Descreption of the City", max_length=100)
     state = models.ForeignKey(State, related_name="StateOfCity", max_length=100, on_delete=CASCADE)
     creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
@@ -72,7 +108,13 @@ class City(models.Model):
         return self.descreption
 
 class Area(models.Model):
+
+    """
+        Grandes áreas como Ciencias exatas e da terra, engenharias, ciencias humanas etc..
+    """
+
     nameArea = models.CharField("Name of the Area", max_length=200)
+    image =  models.ImageField("Image of the Area", upload_to="ImageArea/%y/%m/%d")
     creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
     
     class Meta:
@@ -81,14 +123,21 @@ class Area(models.Model):
         ordering = ['nameArea']
         app_label = 'Users'
 
-class PreferenceArea(models.Model):
+class SubArea(models.Model):
+
+    """
+        Pequenas áreas como Álgebra, Probalidade, Analise etc...
+        Ela precisa ser selecionada de acordo com a area escolhida
+    """
+
     name = models.CharField("Name of preferred area", max_length=100)
+    image =  models.ImageField("Image of the Area", upload_to="SubArea/%y/%m/%d")
     area =  models.ForeignKey(Area,  related_name='AreaOfThePrerence', on_delete=models.CASCADE)
     creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
 
     class Meta:
-        verbose_name = "Area Of the Prefence"        
-        verbose_name_plural="Area Of the Prefences"
+        verbose_name = "Sub Area"        
+        verbose_name_plural="Sub Areas"
         ordering = ['name']
         app_label = 'Users'
 
@@ -97,6 +146,10 @@ class PreferenceArea(models.Model):
 
 
 class User(AbstractBaseUser,PermissionsMixin):
+
+    """
+        Usuários dos sistemas Usuário Físico e Usuário Jurídico
+    """
 
     ACADEMIC_DEGREE = [
         ("EFI", "Ensino fundamental incompleto"),
@@ -107,13 +160,21 @@ class User(AbstractBaseUser,PermissionsMixin):
         ("ESC", "Ensino superior completo"),
     ]
 
+    PROFILE = [
+        ("F","Físico"),
+        ("J","Jurídico"),
+    ]
+
+    profile = models.CharField("Profile of the User", max_length = 194, null=True, blank=True, choices=PROFILE)
     name = models.CharField("Name", max_length = 194, null=True, blank=True)
     birthDate = models.DateField("Birth Date",auto_now=False, auto_now_add=False, null=True, blank=True)
     email = models.EmailField("E-mail",max_length=194, unique=True)
+    Cnpj = models.CharField("CNPJ", max_length=20, unique=True, blank=True, null=True)
     AcademicDegree = models.CharField("Academic Degree", max_length=30, choices=ACADEMIC_DEGREE, null=True, blank=True)
     area = models.ManyToManyField(Area)    
-    areaPreference = models.ManyToManyField(PreferenceArea)
-    country =  models.ForeignKey(Country, related_name="ContryOfTheUser", on_delete=models.CASCADE)
+    areaPreference = models.ManyToManyField(SubArea)
+    continent = models.ForeignKey(Continent, related_name="ContinentOfTheUser", on_delete=models.PROTECT)
+    country =  models.ForeignKey(Country, related_name="ContryOfTheUser", on_delete=models.PROTECT)
     state = models.ForeignKey(State,on_delete=CASCADE, null=True, blank=True, related_name="StateOfTheUser")
     city = models.ForeignKey(City, on_delete=models.CASCADE, related_name="CityOfTheUser", null=True, blank=True)
     profilePicture = models.ImageField("Profile Picture",  null=True, blank=True, upload_to="ProfilePicture/%y/%m/%d")
@@ -138,6 +199,4 @@ class User(AbstractBaseUser,PermissionsMixin):
     def __str__(self):
         return str(self.name)
 
-    # def get_full_name(self): 
-    #     return str(self.nome + ' ' + self.sobrenome)
 
