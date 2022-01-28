@@ -10,7 +10,7 @@ class TypesPublication(models.Model):
 
     name = models.CharField("Publication type name", max_length=20)
     descreption = models.CharField("Descreption of the types", max_length=100)
-    icone =  models.CharField("Icons of the Types", max_length=100)
+    icons =  models.CharField("Icons of the Types", max_length=100)
     creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
     is_active = models.BooleanField("Type is active", default=1)
     disabledBy = models.ForeignKey("Users.User", related_name="disabledByUser", on_delete=models.CASCADE, null=True, blank=True)
@@ -26,7 +26,7 @@ class TypesPublication(models.Model):
     def __str__(self):
         return self.name
 
-class Notice(models.Model):
+class Article(models.Model):
 
     """
         Model para criação de Editais!
@@ -62,8 +62,8 @@ class Notice(models.Model):
     deactivationTime = models.DateTimeField("Deactivation Time", auto_now_add=False, null=True, blank=True)    
 
     class Meta:
-        verbose_name: "Notice"
-        verbose_name_plural = "Notices"
+        verbose_name: "Article"
+        verbose_name_plural = "Articles"
         ordering =  ["title"]
         app_label =  "Administration"
 

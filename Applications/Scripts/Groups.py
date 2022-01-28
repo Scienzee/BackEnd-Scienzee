@@ -14,8 +14,7 @@ sudo docker-compose exec web python manage.py shell
 
 Virtual Env
 python manage.py shell
-
-exec(open('Apps/Scripts/Groups.py').read())
+exec(open('Applications/Scripts/Groups.py').read())
 """
 
 def validate(grupo):

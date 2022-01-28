@@ -1,6 +1,6 @@
 from django.contrib.auth.models import Group
 from Users.models import Area
-
+ 
 # Arquivo para cadastrar as grandes áreas
 
 RED = "\033[1;31m"
@@ -23,10 +23,7 @@ exec(open('Applications/Scripts/Area.py').read())
 def validate(nameArea):
     try:
         validar = Area.objects.get(name = nameArea)
-        if validar:
-            return False
-        else:
-            return True
+        return False
     except:
         return True
 
@@ -74,7 +71,7 @@ for area in listAreas['Area']:
     name =  area['name']
     image =  area['image']
 
-    if validate(area):
+    if validate(name) != False:
         objArea = Area()
         objArea.name = name
         objArea.image =  image

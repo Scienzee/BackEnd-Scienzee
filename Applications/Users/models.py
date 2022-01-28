@@ -173,7 +173,7 @@ class User(AbstractBaseUser,PermissionsMixin):
     AcademicDegree = models.CharField("Academic Degree", max_length=30, choices=ACADEMIC_DEGREE, null=True, blank=True)
     area = models.ManyToManyField(Area)    
     areaPreference = models.ManyToManyField(SubArea)
-    continent = models.ForeignKey(Continent, related_name="ContinentOfTheUser", on_delete=models.PROTECT)
+    continent = models.ForeignKey(Continent, related_name="ContinentOfTheUser", on_delete=models.PROTECT, null=True, blank=True)
     country =  models.ForeignKey(Country, related_name="ContryOfTheUser", on_delete=models.PROTECT)
     state = models.ForeignKey(State,on_delete=CASCADE, null=True, blank=True, related_name="StateOfTheUser")
     city = models.ForeignKey(City, on_delete=models.CASCADE, related_name="CityOfTheUser", null=True, blank=True)

@@ -1,59 +1,55 @@
-from Users.models import CategoriaPublicacao
+from Administration.models import TypesPublication
 
 '''
 Código para executar o script de cadastro do tipo de categoria que a plataforma oferecerá
 $ python manage.py shell
-$ exec(open('scripts/CategoriasdePublicacao.py').read())
+$ exec(open('Applications/Scripts/PublicationCategory.py').read())
 '''
 
-listCategoriaPublicacao = {
-    'categoria':
+RED = "\033[1;31m"
+BLUE = "\033[1;34m"
+CYAN = "\033[1;36m"
+GREEN = "\033[1;32m"
+RESET = "\033[0;0m"
+BOLD = "\033[;1m"
+REVERSE = "\033[;7m"
+
+
+listTypesPublication = {
+    'category':
     [
         {
-            'nome': 'Artigo',
-            'resumo': 'Artigos das mais diversas areas! Tudo para facilitar sua vida academica e profissional',
-            'icone' : 'article',
+            'name': 'Artigo',
+            'descreption': 'Artigos das mais diversas areas! Tudo para facilitar sua vida academica e profissional',
+            'icons' : 'article',
         },
         {
-            'nome': 'Notícias',
-            'resumo': 'Sobre o mundo profissional e academico para se manter atualizado!',
-            'icone' : 'feed',
-        },
-        {
-            'nome': 'Podcast',
-            'resumo': 'Os mais diversos podcast com o intuito de levar a melhor educação possível até voce!',
-            'icone' : 'podcasts',
-        },
-        {
-            'nome': 'Documentário',
-            'resumo': 'Documentários diversificado! A sensação é de estar assistindo a série do momento!',
-            'icone' : 'live_tv',
+            'name': 'Notícias',
+            'descreption': 'Sobre o mundo profissional e academico para se manter atualizado!',
+            'icons' : 'feed',
         },
     ],
 }
 
-
-def validar(valor):
+def validar(name):
     try:
-        CategoriaPublicacao.objects.get(nome=valor)
+        TypesPublication.objects.get(name=name)
         return False
     except:
         return True
 
 
-
-for categoria in listCategoriaPublicacao['categoria']:
-    nome = categoria['nome']
-    resumo = categoria['resumo']
-    icone = categoria['icone']
-
-    if validar(nome):
-        objCategoriaPublicacao = CategoriaPublicacao()
-        objCategoriaPublicacao.nome = nome
-        objCategoriaPublicacao.resumo = resumo
-        objCategoriaPublicacao.icone = icone
-        objCategoriaPublicacao.save()
-    
-        print(f'Categoria = {nome} foi CADASTRADA!!')
+print(BOLD + "\nFoi iniciado a geração de Categorias do Registros!\n" + RESET)
+for category in listTypesPublication['category']:
+    name = category['name']
+    descreption = category['descreption']
+    icons = category['icons']
+    if validar(name):
+        objTypesPublication = TypesPublication()
+        objTypesPublication.name = name
+        objTypesPublication.descreption = descreption
+        objTypesPublication.icons = icons
+        objTypesPublication.save()
+        print(GREEN + "O grupo" + RESET + BOLD + f" {category} " + RESET + GREEN + "foi registrado com sucesso no sistema!" + RESET)
     else:
-        print(f'A Categoria usuario = {nome} já esta cadastrada!!')
+        print(RED + "O grupo" + RED + RED + f" {category} " + RED + RED + "já está registrado no sistema!" + RESET)

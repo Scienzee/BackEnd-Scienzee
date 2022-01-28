@@ -1,6 +1,6 @@
 from django.db import models
 
-from Administration.models import Publication, Notice
+from Administration.models import Publication, Article
 
 
 class LikePublication(models.Model):
@@ -27,9 +27,9 @@ class DeslikePublication(models.Model):
     def __str__(self):
         return str(self.user)
 
-class LikeNotice(models.Model):
-    publication = models.ManyToManyField(Notice)
-    user = models.ForeignKey("Users.User", on_delete=models.PROTECT, related_name="UserLikeNotice")
+class LikeArticle(models.Model):
+    publication = models.ManyToManyField(Article)
+    user = models.ForeignKey("Users.User", on_delete=models.PROTECT, related_name="UserLikeArticle")
     creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
 
     class Meta:
@@ -40,8 +40,8 @@ class LikeNotice(models.Model):
         return str(self.user)
 
 class DeslikeNotice(models.Model):
-    publication = models.ManyToManyField(Notice)
-    user = models.ForeignKey("Users.User", on_delete=models.PROTECT, related_name="UserDesLikeNotice")
+    publication = models.ManyToManyField(Article)
+    user = models.ForeignKey("Users.User", on_delete=models.PROTECT, related_name="UserDesLikeArticle")
     creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
 
     class Meta:
@@ -66,15 +66,15 @@ class DenouncePublication(models.Model):
     def __str__(self):
         return str(self.title)
 
-class DenounceNotice(models.Model):
-    publication = models.ForeignKey("Administration.Notice", on_delete=models.CASCADE, related_name="DenounceOfTheNotice")
+class DenounceArticle(models.Model):
+    publication = models.ForeignKey("Administration.Article", on_delete=models.CASCADE, related_name="DenounceOfTheNotice")
     justification = models.ForeignKey("Administration.Denounce", on_delete=models.PROTECT, related_name="JustificationOfTheDenounceNotice")
     user = models.ForeignKey("Users.User", on_delete=models.PROTECT, related_name="UserDenounceNotice")
     creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
     
     class Meta:
-        verbose_name = "Denoouce Publication"
-        verbose_name_plural = "Denounce Publications"
+        verbose_name = "Denoouce Article"
+        verbose_name_plural = "Denounce Articles"
         ordering = ['publication']
 
     def __str__(self):
