@@ -39,7 +39,7 @@ class LikeArticle(models.Model):
     def __str__(self):
         return str(self.user)
 
-class DeslikeNotice(models.Model):
+class DeslikeArticle(models.Model):
     publication = models.ManyToManyField(Article)
     user = models.ForeignKey("Users.User", on_delete=models.PROTECT, related_name="UserDesLikeArticle")
     creationTime = models.DateTimeField("Creation Time", auto_now_add=True)
