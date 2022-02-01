@@ -11,6 +11,7 @@
 	<a href="#Features">Features</a> &nbsp;|&nbsp;
     <a href="#Tecnologias">Tecnologias</a> &nbsp;|&nbsp;
     <a href="#Rodando">Rodando o Projeto</a> &nbsp;|&nbsp;
+    <a href="#padroes">Padroes do Sistema</a> &nbsp;|&nbsp;
 	<a href="#autores">Autor(es)</a> &nbsp;|&nbsp;
 	<a href="#license">Licença</a>
 </p>
@@ -78,6 +79,31 @@ python manage.py makemigrations Administration
 python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
+
+```
+
+<h3 id="padroes">:clipboard: Padrões do Sistema</h3>
+
+<p>Para manter um padrão em todo o sistema para melhor organização será seguido um padrão para variáveis, classes, funções e a linguagem</p>
+
+<h6>Variáveis</h6>
+
+```
+objVariavel
+
+```
+
+<h6>Classe</h6>
+
+```
+NomeClasse
+
+```
+
+<h6>Views</h6>
+
+```
+viewCadastrarVariavel
 
 ```
 

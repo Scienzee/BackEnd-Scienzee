@@ -1,6 +1,10 @@
 from rest_framework import serializers
 from .models import User
 
+# TRADUÇÃO DJANGO
+# https://github.com/marinho/aprendendo-django/blob/master/22-o-mesmo-site-em-varios-idiomas.md
+
+
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
