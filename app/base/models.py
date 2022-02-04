@@ -18,7 +18,7 @@ class Country(models.Model):
         app_label = 'base'
 
     def __str__(self):
-        return self.descreption
+        return f'{self.descreption} -- {self.initials}'
         
     def __repr__(self):
         return f'[ ModelsCountry ] descreption = {self.descreption}'
@@ -32,6 +32,9 @@ class Country(models.Model):
             logging.info('** Registro inserido da tabela "Coutry" **')
         except Exception as ex:
             logging.warning('** Não conseguiu inserir o registro na tabela "Coutry" **')
+
+    def get_all():
+        return Country.objects.all()
     
 
 class State(models.Model):
