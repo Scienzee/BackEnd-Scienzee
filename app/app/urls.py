@@ -24,13 +24,13 @@ from base.api.viewsets import *
 from dev.urls import urlpatterns
 
 route = routers.DefaultRouter()
-route.register(r'country', CountryViewSet, basename='Country')
+route.register(r'countrys', CountryViewSet, basename='Country')
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('token/', TokenObtainPairView.as_view()),
-    path('token/refresh/', TokenRefreshView.as_view()),
+    path('api/token/', TokenObtainPairView.as_view()),
+    path('api/token/refresh/', TokenRefreshView.as_view()),
     path('api/', include(route.urls)),
     path('', include(urlpatterns))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

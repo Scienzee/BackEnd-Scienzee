@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section id="validacao_token">
+    <h5>Valição e geração de Token</h5>
+    <div id="api-token">
+        <code> POST /api/token/</code>
+        <p>
+            Essa consulta verifica as credencias fornecidas pelo usuário e retorna 02 (dois) tokes de sessão
+            caso seja verificada a correlação e existência
+            do usuário e senha.
+            <br>
+            O <code>refresh</code> token é um retorno padrão do <i>djangorestframework-simplejwt</i>
+            validade <i>default</i> de 24h.
+            Esse token é base para <a href="#api-token-refresh">consulta que valida seu uso por 24h</a>.
+            <br>
+            O <code>access</code> token é um retorno padrão do <i>djangorestframework-simplejwt</i> validade
+            <i>default</i> de 5min.
+            Pode ser usado diretamente nas requisições sem a necessidade validação.
+        </p>
+
+        <p><b>Requisição</b></p>
+        <div class="bg-light rounded">
+            <pre>
+            <code>
+                Headers: Content-Type: application/json
+                body{
+                    "email": "usuario@scienzee.com.br",
+                    "password": "senha"
+                }
+            </code>
+            </pre>
+        </div>
+
+        <p><b>Response</b> <code><b style="color: rgb(114, 177, 19);">(Ok)</b></code></p>
+        <div class="bg-light p-3 rounded">
+            <pre>
+            <code>
+                {
+                    "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl9[...]UzKtZohsr0",
+                    "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2t[...]zMDMyMDcyY2U1NDQ2N8rxu18Fhk"
+                }
+                <small>Status Code: <code><b>200</b></code></small>
+            </code>
+            </pre>
+        </div>
+
+        <p><b>Response</b> <code><b>(Credencias inválidas)</b></code></p>
+        <div class="bg-light p-3 rounded">
+            <pre>
+            <code>
+                {
+                    "detail": "No active account found with the given credentials"
+                }
+                <small>Status Code: <code><b>401</b></code></small>
+            </code>
+            </pre>
+        </div>
+    </div>
+    <br>
+    <hr>
+
+    <div id="api-token-refresh">
+        <code> POST /api/token/refresh/</code>
+        <p>
+            Essa consulta valida o token <code>refresh</code> retornado pela consulta <a
+                href="#api-token"><code> POST /api/token/</code></a>.
+            O token resultade dessa consulta pode ser usado como credencial de acesso direto as funções da
+            aplicação por um prazo de até 24h.
+        </p>
+        <p><b>Requisição</b></p>
+        <div class="bg-light rounded">
+            <pre>
+            <code>
+                Headers: Content-Type: application/json
+                body{
+                    "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl9[...]UzKtZohsr0"
+                }
+            </code>
+            </pre>
+        </div>
+
+        <p><b>Response</b> <code><b style="color: rgb(114, 177, 19);">(Ok)</b></code></p>
+        <div class="bg-light p-3 rounded">
+            <pre>
+            <code>
+                {
+                    "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJ[...]eVjoP2me4Q4w8",
+                }
+                <small>Status Code: <code><b>200</b></code></small>
+            </code>
+            </pre>
+        </div>
+    </div>
+
+</section>
+{% endblock content %}

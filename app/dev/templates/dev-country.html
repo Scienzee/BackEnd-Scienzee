@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section>
+    <h5>CRUD Países</h5>
+    <div id="api-countrys">
+        <code>GET /api/countrys/</code>
+        <p>
+            Esse consulta retorna um array de todos os países cadastrados na base de dados.
+        </p>
+
+        <p><b>Requisição</b></p>
+        <div class="bg-light rounded">
+            <pre>
+            <code>
+                Headers {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJ[ SEU_TOKEN ]Td_vg2lo4KoVtK6i3a3lMHgNkGQcj8s4"
+                }
+            </code>
+            </pre>
+        </div>
+
+        <p><b>Response</b> <code><b style="color: rgb(114, 177, 19);">(Ok)</b></code></p>
+        <div class="bg-light p-3 rounded">
+            <pre>
+            <code>
+                [
+                    {
+                        "id": 1,
+                        "descreption": "Brasil",
+                        "initials": "Br",
+                        "creation_time": "2022-01-26T17:32:39.283312Z"
+                    }
+                ]
+                <small>Status Code: <code><b>200</b></code></small>
+            </code>
+            </pre>
+        </div>
+    </div>
+    <br>
+    <hr>
+
+</section>
+{% endblock content %}

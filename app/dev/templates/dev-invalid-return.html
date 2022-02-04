@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section>
+    <h5>Retornos Inválidos</h5>
+    <div id="api-countrys">
+        <p>
+            A consultas podem retornar erros padrões sobretudo quando se trata de token.
+        </p>
+
+        <p><b>Response</b> <code><b>(Credencias inválidas)</b></code></p>
+        <div class="bg-light p-3 rounded">
+            <pre>
+            <code>
+                {
+                    "detail": "Given token not valid for any token type",
+                    "code": "token_not_valid",
+                    "messages": [
+                        {
+                            "token_class": "AccessToken",
+                            "token_type": "access",
+                            "message": "Token is invalid or expired"
+                        }
+                    ]
+                }
+                <small>Status Code: <code><b>401</b></code></small>
+            </code>
+            </pre>
+        </div>
+
+        <p><b>Response</b> <code><b>(Token não informado)</b></code></p>
+        <div class="bg-light p-3 rounded">
+            <pre>
+            <code>
+                {
+                    "detail": "Authorization header must contain two space-delimited values",
+                    "code": "bad_authorization_header"
+                }
+                <small>Status Code: <code><b>401</b></code></small>
+            </code>
+            </pre>
+        </div>
+
+    </div>
+    <br>
+    <hr>
+
+</section>
+{% endblock content %}
